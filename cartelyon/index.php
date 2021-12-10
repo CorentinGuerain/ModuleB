@@ -10,7 +10,7 @@
     <title>Document</title>
 </head>
 <body onload="ChargerMarker()">
-    <img src="img/marker.png" id="marker" style="display: none; position: absolute;" />
+
     <img src="img/map.png" id="map"/>
 
 </body>

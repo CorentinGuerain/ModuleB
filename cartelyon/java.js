@@ -1,4 +1,13 @@
 function positionMarker(x,y){
+    let b = document.body;
+    let newimg = document.createElement('img');
+
+    newimg.setAttribute("src","img/marker.png");
+    newimg.setAttribute("id","marker");
+    newimg.setAttribute("style","display: none; position: absolute; width: 3%;");
+
+    b.append(newimg);
+
     map = document.getElementById("map");
     marker = document.getElementById('marker');
 
@@ -16,12 +25,21 @@ function ChargerMarker(){
     request.responseType = 'json';
 
     request.onload = function() {
-        console.log(request.response);
-        const obj = JSON.parse(request.response) ;
-        alert(obj.id);
-        //parcourir le json a chaque occurence de x, y appeler le positionMarker
+
+        var txt ='{"animations" :' + JSON.stringify(request.response) + '}';
+        var x;
+        var y;
+
+        const animation = JSON.parse(txt, (key, value) => {
+                if(key === "_coord__x"){
+                    x = value;
+                }
+                if (key === '_coord__y'){
+                    y = value;
+                }
+
+                positionMarker(x ,y);
+        });
     };
-
-
     request.send();
 }
