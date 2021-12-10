@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Oswald";
+    src: url(polices/Oswald/Oswald-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Montserra";
+    src: url(polices/Montserrat/Montserrat-Regular.ttf);
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Bulle & Chatbot */
+
+#bulle{
+    width: 9em;
+    position: fixed;
+    top: 87%;
+    left: 92%;
+    z-index: 11000;
+} 
+
+#bulle:hover{
+    cursor:pointer; 
+} 
+
+#bulle:hover{
+    width: 9.5em;
+}
+ 
+#chatbot { 
+    padding:10px;
+    background:#fff;
+    height:70%;
+    width:25%;
+    border:1px solid #000000;
+    overflow:auto;
+    border-radius: 5%;
+    position: fixed;
+    top: 17%;
+    left: 73%;
+    z-index: 11000; 
+}  
+
+#point1, #point2, #point3{
+    width: 15%;
+    height: 60%;
+    border-radius: 100%;
+}
+
+#bulle_points{
+    padding:10px;
+    background:#fff;
+    height:2%;
+    width:10%;
+    border:1px solid #666666;
+    border-radius: 100%; 
+    text-align: center;
+}
+
+#test{
+    resize: none;
+    border-radius: 5%;
+    width: 50%;
+    margin-left: 2%;
+    font-family: "Montserra";
+    background-color: #fff;
+    border:1px solid #000000;
+}
+
+
+/* #text_input{
+    position: absolute;
+    top:95%;
+    left: 5%;
+    width: 88%;
+    right:5%;
+} */
