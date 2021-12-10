@@ -1,0 +1,14 @@
+html, body{
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+#map{
+    width: 70%;
+}
+
+#marker{
+    width: 3%;
+    left: 454;
+}
