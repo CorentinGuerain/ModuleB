@@ -10,8 +10,8 @@
     <title>Document</title>
 </head>
 <body onload="ChargerMarker()">
-
     <img src="img/map.png" id="map"/>
+
 
 </body>
 </html>
