@@ -54,6 +54,8 @@
       window.addEventListener("mouseup", mouseUp);
 
       initPointer();
+      fixermarker();
+      chargerpopup();
       initLine()
     }
 
@@ -120,26 +122,25 @@
                    <button onclick="addToList(${k})" class="py-1 px-2 uppcaser bg-[blue] text-white">Ajouter a l'itinere</button>
                     </div>`;
           }
+
           $pointers.innerHTML = markup;
+
+
         }
       }
+    }
 
-      console.log(markup);
-
-
-      $
-
+    function fixermarker(){
+      let $pointerModal = document.querySelectorAll(".pointer-modal");
       $pointerModal.forEach((element) => {
         element.style.left = `${pointers[element.dataset.index].x + 25}px`
         element.style.top = `${pointers[element.dataset.index].y - 150}px`
       })
-
-
     }
 
     function chargerpopup(){
       $pointer = $pointers.querySelectorAll(".pointer");
-      let $pointerModal = document.querySelectorAll(".pointer-modal");
+
       $pointer.forEach((element) => {
         /*element.style.left = `${pointers[element.dataset.index].x}px`
         element.style.top = `${pointers[element.dataset.index].y}px`*/
@@ -154,7 +155,9 @@
           $line.forEach(element => element.classList.add("brightness-50"))
           modalOpen = true;
         });
+
       })
+
       $mapContainer.addEventListener("click", closeModal);
     }
 
