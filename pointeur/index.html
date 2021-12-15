@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn-tailwindcss.vercel.app/"></script>
+  </head>
+  <body>
+  <main>
+    <h1>Map</h1>
+    <div
+            class="my-[100px] mx-auto w-[70vw] h-[700px] relative overflow-hidden"
+            id="map-container"
+    >
+      <img
+              class="max-w-none select-none absolute filter"
+              src="map.png"
+              id="map"
+              alt="map"
+              ondragstart="return false;"
+      />
+      <div id="pointers"></div>
+      <div id="lines"></div>
+    </div>
+  </main>
+  </body>
+  <script>
+    let gMouseDownX = 0;
+    let gMouseDownY = 0;
+    let gMouseDownOffsetX = 0;
+    let gMouseDownOffsetY = 0;
+
+    //let pointers = [{x: 544, y: 144 }, {x: 600, y: 200 }, {x: 700, y: 255 }, {x: 800, y: 355 }, {x: 821, y: 333 }];
+    let lines = []
+    let list = []
+
+    let $map = document.querySelector("#map");
+    let $pointers = document.querySelector("#pointers");
+    let $lines = document.querySelector("#lines");
+    let $mapContainer = document.querySelector("#map-container");
+    let $pointer;
+    let $line;
+
+    let maxLeft = Math.round($map.width - $mapContainer.offsetWidth) * -1;
+    let maxTop = Math.round($map.height - $mapContainer.offsetHeight) * -1;
+
+    let modalOpen = false;
+    var pointers = new Array();
+    var markup = '';
+
+
+    function init() {
+      $map.addEventListener("mousedown", mouseDown);
+      window.addEventListener("mouseup", mouseUp);
+
+      initPointer();
+      fixermarker();
+      chargerpopup();
+      initLine()
+    }
+
+    function addToList(i) {
+      list.push(i)
+      initLine();
+    }
+
+    function initPointer() {
+
+
+      /*let markup = ''
+      let i = 0
+      for (const element in pointers) {
+        markup += `<img data-index="${i}" src="marker.svg" class="h-[50px] absolute cursor-pointer pointer z-10" alt="map">
+                   <div data-index="${i}" class="absolute h-[200px] w-[150px] bg-white hidden pointer-modal z-20 p-3">
+                   <h2>Animation ${i}</h2>
+                   <button onclick="addToList(${i})" class="py-1 px-2 uppcaser bg-[blue] text-white">Ajouter a l'itinere</button>
+                    </div>`;
+        i++;
+      }*/
+
+
+
+      var request = new XMLHttpRequest();
+
+      var array = new Array();
+      var oldarray = new Array();
+
+      request.open('POST', 'http://localhost/api_animation/public/animation/list', true);
+
+      request.responseType = 'json';
+
+
+      request.onreadystatechange = chargement;
+
+      request.send();
+
+      function chargement(){
+        var txt = '{"animations" :' + JSON.stringify(request.response) + '}';
+
+        var x ;
+        var y ;
+
+        const animation = JSON.parse(txt);
+        for (let j = 0; j <= animation.animations.length; j++) {
+          markup = '';
+
+          ab = animation.animations[j]._coord__x;
+          or = animation.animations[j]._coord__y;
+          array = [{x : ab, y : or}];
+          oldarray = oldarray.concat(array);
+          //alert(ab +" " + or);
+          pointers = oldarray;
+          //console.log(pointers);
+          //style="width: 44px; height: 44px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"
+          //draggable="false"
+          let i = 0;
+
+          for (var k = 0; k < pointers.length ; k++) {
+            markup+= `<img data-index="${k}" src="marker.svg" class="h-[50px] absolute cursor-pointer pointer z-10" alt="map" style="position: absolute ;left:`+pointers[k].x+`px ; top:`+pointers[k].y+`px;" onclick="chargerpopup()">
+                   <div data-index="${k}" class="absolute h-[200px] w-[150px] bg-white hidden pointer-modal z-20 p-3">
+                   <h2>Animation ${k}</h2>
+                   <button onclick="addToList(${k})" class="py-1 px-2 uppcaser bg-[blue] text-white">Ajouter a l'itinere</button>
+                    </div>`;
+          }
+
+          $pointers.innerHTML = markup;
+
+
+        }
+      }
+    }
+
+    function fixermarker(){
+      let $pointerModal = document.querySelectorAll(".pointer-modal");
+      $pointerModal.forEach((element) => {
+        element.style.left = `${pointers[element.dataset.index].x + 25}px`
+        element.style.top = `${pointers[element.dataset.index].y - 150}px`
+      })
+    }
+
+    function chargerpopup(){
+      $pointer = $pointers.querySelectorAll(".pointer");
+
+      $pointer.forEach((element) => {
+        /*element.style.left = `${pointers[element.dataset.index].x}px`
+        element.style.top = `${pointers[element.dataset.index].y}px`*/
+        //alert("entré");
+        element.addEventListener("click", (e) => {
+          if (modalOpen)
+            closeModal()
+          e.stopImmediatePropagation();
+          document.querySelector(`.pointer-modal[data-index="${e.currentTarget.dataset.index}"]`).classList.remove("hidden");
+          $map.classList.add("brightness-50");
+          $pointer.forEach(element => element.classList.add("brightness-50"))
+          $line.forEach(element => element.classList.add("brightness-50"))
+          modalOpen = true;
+        });
+
+      })
+
+      $mapContainer.addEventListener("click", closeModal);
+    }
+
+    function initLine() {
+      let markup = ''
+      let start = 0
+      let end = 1
+      if (list.length > 1) {
+        for (let i = 0; i < list.length - 1; i++) {
+          lines.push({start: list[start], end: list[end]})
+          start++
+          end++
+        }
+      }
+      lines.forEach(element => {
+        let start = pointers[element.start]
+        let end = pointers[element.end]
+
+        markup += `<svg class="absolute pointer-events-none z-10" width="100%" height="100%"><line class="line" data-start="${element.start}" data-end="${element.end}" x1="${start.x + 25}" y1="${start.y + 50}" x2="${end.x + 25}" y2="${end.y + 50}" stroke="red" stroke-width="3"/></svg>`
+      })
+
+      $lines.innerHTML = markup
+
+      $line = $lines.querySelectorAll(".line");
+    }
+
+    function closeModal() {
+      if (modalOpen) {
+        document.querySelectorAll('.pointer-modal').forEach(element => {
+          if (!element.classList.contains('hidden'))
+            element.classList.add("hidden")
+        })
+        $map.classList.remove("brightness-50");
+        $pointer.forEach(element => element.classList.remove("brightness-50"))
+        $line.forEach(element => element.classList.remove("brightness-50"))
+        modalOpen = false;
+      }
+    }
+
+    function mouseUp() {
+      $map.style.cursor = "auto";
+      window.removeEventListener("mousemove", divMove);
+    }
+
+    function mouseDown(e) {
+      if (!modalOpen) {
+        gMouseDownX = e.clientX;
+        gMouseDownY = e.clientY;
+
+        //The following block gets the X offset (the difference between where it starts and where it was clicked)
+        let leftPart = "";
+        if (!$map.style.left) leftPart += "0px";
+        //In case this was not defined as 0px explicitly.
+        else leftPart = $map.style.left;
+        let leftPos = leftPart.indexOf("px");
+        let leftNumString = leftPart.slice(0, leftPos); // Get the X value of the object.
+        gMouseDownOffsetX = gMouseDownX - parseInt(leftNumString, 10);
+
+        //The following block gets the Y offset (the difference between where it starts and where it was clicked)
+        let topPart = "";
+        if (!$map.style.top) topPart += "0px";
+        //In case this was not defined as 0px explicitly.
+        else topPart = $map.style.top;
+        let topPos = topPart.indexOf("px");
+        let topNumString = topPart.slice(0, topPos); // Get the Y value of the object.
+        gMouseDownOffsetY = gMouseDownY - parseInt(topNumString, 10);
+
+        window.addEventListener("mousemove", divMove);
+      }
+    }
+
+    function divMove(e) {
+      $map.style.cursor = "move";
+      let topAmount = e.clientY - gMouseDownOffsetY;
+      if (topAmount <= 0 && topAmount >= maxTop) {
+        $map.style.top = topAmount + "px";
+        $pointer.forEach(pointer => {
+          pointer.style.top = `${pointers[pointer.dataset.index].y + topAmount}px`;
+          document.querySelector(`.pointer-modal[data-index="${pointer.dataset.index}"]`).style.top = `${pointers[pointer.dataset.index].y + topAmount - 150}px`;
+          $line.forEach(line => {
+            if (line.dataset.start === pointer.dataset.index)
+              line.setAttribute('y1', pointers[pointer.dataset.index].y + topAmount + 50)
+            if (line.dataset.end === pointer.dataset.index)
+              line.setAttribute('y2' , pointers[pointer.dataset.index].y + topAmount + 50)
+          })
+        })
+      }
+      let leftAmount = e.clientX - gMouseDownOffsetX;
+      if (leftAmount <= 0 && leftAmount >= maxLeft) {
+        $map.style.left = leftAmount + "px";
+        $pointer.forEach(pointer => {
+          pointer.style.left = `${pointers[pointer.dataset.index].x + leftAmount}px`;
+          document.querySelector(`.pointer-modal[data-index="${pointer.dataset.index}"]`).style.left = `${pointers[pointer.dataset.index].x + leftAmount + 25}px`;
+          $line.forEach(line => {
+            if (line.dataset.start === pointer.dataset.index)
+              line.setAttribute('x1', pointers[pointer.dataset.index].x + leftAmount + 25)
+            if (line.dataset.end === pointer.dataset.index)
+              line.setAttribute('x2', pointers[pointer.dataset.index].x + leftAmount + 25)
+          })
+        })
+      }
+    }
+
+    init();
+  </script>
+</html>
