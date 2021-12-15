@@ -44,13 +44,13 @@ body {
     z-index: 11000; 
 }  
 
-#point1, #point2, #point3{
+.points{
     width: 15%;
     height: 60%;
     border-radius: 100%;
 }
 
-#bulle_points{
+.bulles{
     padding:10px;
     background:#fff;
     height:2%;
@@ -60,9 +60,20 @@ body {
     text-align: center;
 }
 
-#test{
+#test_1{
     resize: none;
     border-radius: 5%;
+    width: 50%;
+    margin-left: 2%;
+    font-family: "Montserra";
+    background-color: #fff;
+    border:1px solid #000000;
+}
+
+#test_2{
+    resize: none;
+    border-radius: 5%;
+    height: 10%;
     width: 50%;
     margin-left: 2%;
     font-family: "Montserra";
