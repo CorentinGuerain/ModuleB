@@ -24,7 +24,7 @@ function bulleCLick(){
 }
 
 function clickButton(){
-    alert("passse");
+    alert("Bouton cliqué");
 }
 
 function animation($position, $repeat){
