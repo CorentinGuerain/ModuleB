@@ -1,0 +1,133 @@
+Liste des routes :
+
+- Route : "parcours/list"
+
+	Permet de récupérer toutes les animations, avec les numéro d'ordre des parcours.
+
+	Exemple de retour :
+		[
+		    {
+		        "num_ordre": 1,
+		        "animation_titre": "S\u00e9ances de tissage pour enfants ",
+		        "id_Animation": 3,
+		        "coord_X": "45.78040",
+		        "coord_Y": "4.83688"
+		    },
+		    {
+		        "num_ordre": 2,
+		        "animation_titre": "Chai Saint Olive d\u00e9gustation et atelier ",
+		        "id_Animation": 5,
+		        "coord_X": "45.77050",
+		        "coord_Y": "4.84241"
+		    },
+		    {
+		        "num_ordre": 3,
+		        "animation_titre": "Balades en Side-Car avec la Belle Vadrouille ",
+		        "id_Animation": 8,
+		        "coord_X": "45.77230",
+		        "coord_Y": "4.82359"
+		    },
+		    {
+		        "num_ordre": 4,
+		        "animation_titre": "Visites gourmandes by Tasty ",
+		        "id_Animation": 6,
+		        "coord_X": "45.75850",
+		        "coord_Y": "4.83248"
+		    }
+		]
+
+- Route : "/animation/list"
+
+	Permet de lister toutes les animations.
+
+
+	Exemple de retour :
+		[
+		    {
+		        "id": 1,
+		        "coord__x": 45.7782,
+		        "coord__y": 4.83476,
+		        "animation_titre": "En'qu\u00eate de Lyon - Les parcours de Ludilyon ",
+		        "animation_lieu": "Lieux divers - 69004 Lyon 4\u00e8me",
+		        "animation_photo": "enquete_de_lyon.jpg",
+		        "animation_description": "Toute l\u2019\u00e9quipe des guides de Ludilyon s\u2019ennuyait de ne pas pouvoir faire visiter la ville et ses alentours ! Alors, pendant les confinements, nous avons \u00e9labor\u00e9 pour les familles plusieurs balades sous forme de jeux de piste. "
+		    },
+		    {
+		        "id": 2,
+		        "coord__x": 45.7751,
+		        "coord__y": 4.8315,
+		        "animation_titre": "D\u00e9couvrez le patrimoine lyonnais avec Ludilyon ",
+		        "animation_lieu": "1 place Croix-Rousse - 69004 Lyon 4\u00e8me",
+		        "animation_photo": "patrimoine_lyonnais.jpg",
+		        "animation_description": "L'objectif de l'association : faire d\u00e9couvrir le patrimoine lyonnais aux enfants de 4-12 ans par des activit\u00e9s ludiques et originales: chasses au tr\u00e9sor, jeux de pistes et enqu\u00eates polici\u00e8res, trait d'union entre voir et savoir ! "
+		    },
+		    {
+		        "id": 3,
+		        "coord__x": 45.7804,
+		        "coord__y": 4.83688,
+		        "animation_titre": "S\u00e9ances de tissage pour enfants ",
+		        "animation_lieu": "21 rue Richan 12 bis mont\u00e9e Justin Godard - 69004 Lyon 4\u00e8me",
+		        "animation_photo": "tissage_enfants.jpg",
+		        "animation_description": "Apr\u00e8s avoir appris \u00e0 tisser sur des petits m\u00e9tiers, les enfants font une visite comment\u00e9e de l'atelier de passementerie de Mme Letourneau. Ils profitent ensuite d'un go\u00fbter bien m\u00e9rit\u00e9 et repartent avec leur cr\u00e9ation ! "
+		    },
+		    {
+		        "id": 4,
+		        "coord__x": 45.7698,
+		        "coord__y": 4.83708,
+		        "animation_titre": "Acad\u00e9mie de Ballet Nini Th\u00e9ilade",
+		        "animation_lieu": "9 petite rue Feuillants - 69001 Lyon 1er ",
+		        "animation_photo": "ballet.jpg",
+		        "animation_description": "Danse classique, danse de caract\u00e8re, modern jazz, baroque, contemporain. Assouplissement. Stages et master classes. Stage International Theila\u00efa. Pratique en amateur et professionnel. Pour adultes et enfants d\u00e8s 4 ans. "
+		    },
+		    {
+		        "id": 5,
+		        "coord__x": 45.7705,
+		        "coord__y": 4.84241,
+		        "animation_titre": "Chai Saint Olive d\u00e9gustation et atelier ",
+		        "animation_lieu": "34 rue Malesherbes - 69006 Lyon 6\u00e8me ",
+		        "animation_photo": "chai_st_olive.jpg",
+		        "animation_description": "Chai Saint Olive est le premier chai de vinification de Lyon. Cr\u00e9ateur de vins urbains, c'est un lieu de production mais aussi un lieu \u00e9v\u00e9nementiel unique d\u00e9di\u00e9 aux d\u00e9gustations, visites, ateliers \u0153nologiques, formations, \u00e9v\u00e8nements d\u2019entreprises / priv\u00e9s "
+		    },
+		    {
+		        "id": 6,
+		        "coord__x": 45.7585,
+		        "coord__y": 4.83248,
+		        "animation_titre": "Visites gourmandes by Tasty ",
+		        "animation_lieu": "D\u00e9part Place Bellecour - 69002 Lyon 2\u00e8me",
+		        "animation_photo": "food-tasty-lyon-visite-gourmande-tarte-praline.jpg",
+		        "animation_description": "Et si vous d\u00e9couvriez Lyon autrement ? Nous vous proposons des visites gourmandes rythm\u00e9es par des anecdotes, recettes, petites et grandes histoires et bien s\u00fbr d\u00e9gustations ! D\u00e9couvrez Lyon dans toutes ses saveurs !"
+		    },
+		    {
+		        "id": 7,
+		        "coord__x": 45.7585,
+		        "coord__y": 4.83248,
+		        "animation_titre": "Parcours audioguid\u00e9 dans le Vieux-Lyon\r\n",
+		        "animation_lieu": "Place Bellecour - 69002 Lyon 2\u00e8me ",
+		        "animation_photo": "le-vieux-lyon-1-FR-rewind.jpg",
+		        "animation_description": "Envie de visiter Lyon avec un guide local et passionn\u00e9 dans votre poche et \u00e0 votre rythme ? C\u2019est d\u00e9sormais possible gr\u00e2ce \u00e0 l\u2019application Rewind !"
+		    },
+		    {
+		        "id": 8,
+		        "coord__x": 45.7723,
+		        "coord__y": 4.82359,
+		        "animation_titre": "Balades en Side-Car avec la Belle Vadrouille ",
+		        "animation_lieu": "21 rue des Chartreux - 69001 Lyon 1er ",
+		        "animation_photo": "balade_en_sidecar.jpg",
+		        "animation_description": "Vivez un moment de convivialit\u00e9 et de partage, seul ou \u00e0 deux avec La Belle Vadrouille ! Gr\u00e2ce \u00e0 des casques \u00e9quip\u00e9s d\u2019un syst\u00e8me de communication (micros et \u00e9couteurs), \u00e9changez avec votre guide Christelle \u00e0 l'occasion d'une vir\u00e9e aussi s\u00e9duisante qu'amusante !"
+		    }
+		]
+
+- Route : "/animation/{id}"
+
+	Permet de donner les infos d'une animation.
+
+	Exemple de retour : 
+		{
+		    "id": 1,
+		    "coord__x": 45.7782,
+		    "coord__y": 4.83476,
+		    "animation_titre": "En'qu\u00eate de Lyon - Les parcours de Ludilyon ",
+		    "animation_lieu": "Lieux divers - 69004 Lyon 4\u00e8me",
+		    "animation_photo": "enquete_de_lyon.jpg",
+		    "animation_description": "Toute l\u2019\u00e9quipe des guides de Ludilyon s\u2019ennuyait de ne pas pouvoir faire visiter la ville et ses alentours ! Alors, pendant les confinements, nous avons \u00e9labor\u00e9 pour les familles plusieurs balades sous forme de jeux de piste. "
+		}
