@@ -87,7 +87,7 @@
       let $pointerModal = document.querySelectorAll(".pointer-modal");
       $pointer.forEach((element) => {
         element.style.left = `${pointers[element.dataset.index].x}px`
-        element.style.top = `${pointers[element.dataset.index].y}px`
+        element.style.top = `${pointers[element.dataset.index].y+20}px`
 
         element.addEventListener("click", (e) => {
           if (modalOpen)
