@@ -1,0 +1,152 @@
+@font-face {
+    font-family: "Oswald";
+    src: url(polices/Oswald/Oswald-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Montserra";
+    src: url(polices/Montserrat/Montserrat-Regular.ttf);
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Bulle & Chatbot */
+
+#bulle{
+    width: 9em;
+    position: fixed;
+    top: 87%;
+    left: 92%;
+    z-index: 11000;
+} 
+
+#bulle:hover{
+    cursor:pointer; 
+} 
+
+#bulle:hover{
+    width: 9.5em;
+}
+ 
+#chatbot { 
+    padding:10px;
+    background:#fff;
+    height:70%;
+    width:25%;
+    border:1px solid #000000;
+    overflow:auto;
+    border-radius: 5%;
+    position: fixed;
+    top: 17%;
+    left: 73%;
+    z-index: 11000; 
+}  
+
+.points{
+    width: 15%;
+    height: 60%;
+    border-radius: 100%;
+}
+
+.bulles{
+    padding:10px;
+    background:#fff;
+    height:2%;
+    width:10%;
+    border:1px solid #666666;
+    border-radius: 100%; 
+    text-align: center;
+}
+
+#test_1{
+    resize: none;
+    border-radius: 5%;
+    width: 50%;
+    margin-left: 2%;
+    font-family: "Montserra";
+    background-color: #fff;
+    /* border:1px solid #000000; */
+    /* box-sizing: border-box; */
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#test_2{
+    resize: none;
+    border-radius: 5%;
+    height: 15% !important;
+    width: 50%;
+    margin-left: 2%;
+    font-family: "Montserra";
+    background-color: #fff;
+    /* border:1px solid #000000; */
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+
+/* #text_input{
+    position: absolute;
+    top:95%;
+    left: 5%;
+    width: 88%;
+    right:5%;
+} */
+
+/* CSS */
+.button-4 {
+    margin-left: 2%;
+
+  appearance: none;
+  background-color: #FAFBFC;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292E;
+  cursor: pointer;
+  /* display: inline-block; */
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.button-4:hover {
+  background-color: #F3F4F6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.button-4:active {
+  background-color: #EDEFF2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+.button-4:focus {
+  outline: 1px transparent;
+}
+
+.button-4:before {
+  display: none;
+}
+
+.button-4:-webkit-details-marker {
+  display: none;
+}
