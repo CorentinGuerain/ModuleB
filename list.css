@@ -1,0 +1,10 @@
+main > div {
+    display: table-cell;
+}
+
+#event-list {
+    top: 10px;
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+}

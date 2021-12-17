@@ -4,12 +4,22 @@
     <meta charset="UTF-8" />
     <title>Title</title>
     <script src="https://cdn-tailwindcss.vercel.app/"></script>
+    <link rel="stylesheet" href="list.css">
   </head>
   <body>
-  <main>
+  <main class="mx-auto my-[100px]">
     <h1>Map</h1>
+
+    <div id="event-list">
+      <ul class="draggable-list" id="draggable-list"></ul>
+      <button class="check-btn" id="check">
+        Check Order
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+    
     <div
-            class="my-[100px] mx-auto w-[70vw] h-[700px] relative overflow-hidden"
+            class="w-[70vw] h-[700px] relative overflow-hidden"
             id="map-container"
     >
       <img
@@ -201,4 +211,5 @@
 
     init();
   </script>
+  <script src="draggable-list.js"></script>
 </html>
