@@ -5,31 +5,49 @@
   <title>Title</title>
   <script src="https://cdn-tailwindcss.vercel.app/"></script>
 </head>
+<style>
+  main > div {
+    display: table-cell;
+}
+
+#event-list {
+    top: 10px;
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+}
+</style>
 <body class="bg-[lightgrey]">
-<main onload="addmarkerlist()">
-  <h1>List</h1>
-  <div>
-    <ul class="listtest" id="tesli"></ul>
-    <ul class="vraieliste" id="vraieliste"></ul>
-  </div>
-  <h1>Map</h1>
+  <main onload="addmarkerlist()" class="mx-auto my-[100px]">
+    <h1>List</h1>
+    <div>
+      <ul class="listtest" id="tesli"></ul>
+      <ul class="vraieliste" id="vraieliste"></ul>
+    </div>
+
+    <h1>Map</h1>
   <div id="popup" class="my-[100px] mx-auto w-[70vw] h-[700px] absolute overflow-hidden"></div>
-  <div
-          class="my-[100px] mx-auto w-[70vw] h-[700px] relative overflow-hidden"
-          id="map-container"
-  >
-    <img
-            class="max-w-none select-none absolute filter"
-            src="map.png"
-            id="map"
-            alt="map"
-            ondragstart="return false;"
-    />
-    <div id="pointers"></div>
-    <div id="lines"></div>
-  </div>
-</main>
-</body>
+  
+    <div id="event-list">
+      <ul class="draggable-list" id="draggable-list"></ul>
+    </div>
+    
+    <div
+            class="w-[70vw] h-[700px] relative overflow-hidden"
+            id="map-container"
+    >
+      <img
+              class="max-w-none select-none absolute filter"
+              src="map.png"
+              id="map"
+              alt="map"
+              ondragstart="return false;"
+      />
+      <div id="pointers"></div>
+      <div id="lines"></div>
+    </div>
+  </main>
+  </body>
 <script>
   let gMouseDownX = 0;
   let gMouseDownY = 0;
@@ -40,13 +58,12 @@
   let lines = [];
   let list = [];
 
-
   let $map = document.querySelector("#map");
   let $pointers = document.querySelector("#pointers");
   let $popup = document.querySelector("#popup");
   let $lines = document.querySelector("#lines");
   let $ul = document.querySelector("#tesli");
-  let $vraieul = document.querySelector("#vraieliste");
+  let $vraieul = document.querySelector("#draggable-list");
   let $mapContainer = document.querySelector("#map-container");
   let $pointer;
   let $line;
@@ -85,7 +102,7 @@
     var array = new Array();
     var oldarray = new Array();
 
-    request.open('POST', 'http://localhost/api_animation/public/animation/list', true);
+    request.open('POST', 'http://localhost:8000/animation/list', true);
 
     request.responseType = 'json';
 
@@ -101,46 +118,49 @@
       var y ;
 
       const animation = JSON.parse(txt);
-      for (let j = 0; j <= animation.animations.length; j++) {
-        markup = '';
-        popup= '';
-        liste = '';
+      if(animation.animations != null) {
+        for (let j = 0; j <= animation.animations.length; j++) {
+          if(animation.animations[j] != null) {
+            markup = '';
+            popup= '';
+            liste = '';
 
-        ab = animation.animations[j]._coord__x;
-        or = animation.animations[j]._coord__y;
-        titre = animation.animations[j].animation_titre;
-        lieu = animation.animations[j].animation_lieu;
-        photo = animation.animations[j].animation_photo;
-        desc = animation.animations[j].animation_description;
-        array = [{x : ab, y : or, titre : titre, lieu : lieu, photo : photo, desc : desc}];
-        oldarray = oldarray.concat(array);
-        //alert(ab +" " + or);
-        pointers = oldarray;
-        //console.log(pointers);
-        //style="width: 44px; height: 44px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"
-        //draggable="false"
-        let i = 0;
+            ab = animation.animations[j]._coord__x;
+            or = animation.animations[j]._coord__y;
+            titre = animation.animations[j].animation_titre;
+            lieu = animation.animations[j].animation_lieu;
+            photo = animation.animations[j].animation_photo;
+            desc = animation.animations[j].animation_description;
+            array = [{x : ab, y : or, titre : titre, lieu : lieu, photo : photo, desc : desc}];
+            oldarray = oldarray.concat(array);
+            //alert(ab +" " + or);
+            pointers = oldarray;
+            //console.log(pointers);
+            //style="width: 44px; height: 44px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"
+            //draggable="false"
+            let i = 0;
 
-        for (var k = 0; k < pointers.length ; k++) {
-          titre = pointers[k].titre;
+            for (var k = 0; k < pointers.length ; k++) {
+              titre = pointers[k].titre;
 
-          liste += `<li data-index="${k}" class="listeall hidden">`+titre+`</li>`;
+              liste += `<li data-index="${k}" class="listeall hidden">`+titre+`</li>`;
 
-          markup+= `<img id="markup" data-index="${k}" src="marker.svg" class="h-[50px] absolute cursor-pointer pointer z-10" alt="map" style="position: absolute ;left:`+pointers[k].x+`px ; top:`+pointers[k].y+`px;" onload="hidebutt(), chargerpopup()">`;
+              markup+= `<img id="markup" data-index="${k}" src="marker.svg" class="h-[50px] absolute cursor-pointer pointer z-10" alt="map" style="position: absolute ;left:`+pointers[k].x+`px ; top:`+(pointers[k].y+20)+`px;" onload="hidebutt(), chargerpopup()">`;
 
-          popup += `<div data-index="${k}" class="rounded relative h-[600px] w-[350px] bg-cyan-50 hidden outline outline-offset-2 outline-cyan-500 pointer-modal z-20 p-3 px-4 grid justify-items-center" style="left: 50%; margin-top: 4%">
-                   <h2 class="titremarker font-bold text-blue-600 underline decoration-2 flex justify-center">`+pointers[k].titre+`</h2><br>
-                   <h6 class="italic flex justify-center underline">`+pointers[k].lieu+`</h6><br>
-                   <img class="max-w-[75%] mx-auto" src="`+pointers[k].photo+`"><br>
-                   <p class="text-center">`+pointers[k].desc+`</p><br>
-                   <button data-index="${k}" id="iti" onclick="addToList(${k}), closeModal(),initListe()" class="py-1 px-2 uppcaser bg-[blue] text-white rounded-lg additi">Ajouter a l'itinéraire</button>
-                    </div>`;
+              popup += `<div data-index="${k}" class="rounded relative h-[600px] w-[350px] bg-cyan-50 hidden outline outline-offset-2 outline-cyan-500 pointer-modal z-20 p-3 px-4 grid justify-items-center" style="left: 50%; margin-top: 4%">
+                      <h2 class="titremarker font-bold text-blue-600 underline decoration-2 flex justify-center">`+pointers[k].titre+`</h2><br>
+                      <h6 class="italic flex justify-center underline">`+pointers[k].lieu+`</h6><br>
+                      <img class="max-w-[75%] mx-auto" src="`+pointers[k].photo+`"><br>
+                      <p class="text-center">`+pointers[k].desc+`</p><br>
+                      <button data-index="${k}" id="iti" onclick="addToList(${k}), closeModal()" class="py-1 px-2 uppcaser bg-[blue] text-white rounded-lg additi">Ajouter a l'itinéraire</button>
+                        </div>`;
+            }
+
+            $pointers.innerHTML = markup;
+            $popup.innerHTML = popup;
+            $ul.innerHTML = liste;
+          }
         }
-
-        $pointers.innerHTML = markup;
-        $popup.innerHTML = popup;
-        $ul.innerHTML = liste;
-
       }
     }
   }
@@ -172,14 +192,10 @@
         yMarker = document.querySelector(`.pointer[data-index="${e.currentTarget.dataset.index}"]`).style.getPropertyValue("top");
         premierli = [{num_ordre:compteur,id_anim:idMarker,titre_anim:titreMarker,x:xMarker,y:yMarker}];
         ordreliste = ordreliste.concat(premierli);
-        compteur++;
-        for (var l = 0; l < ordreliste.length; l++) {
-          liste = '';
-          console.log(ordreliste[l]);
-          liste = `<li data-index="${l}">`+ordreliste[l].titre_anim+`</li>`;
 
-        }
-        $vraieul.innerHTML = $vraieul.innerHTML + liste;
+        addElementPointerList(compteur, ordreliste[compteur]);
+
+        compteur++;
       });
 
     });
@@ -188,7 +204,7 @@
   function hidebutt(){
     premierpointeur = document.querySelector(`.pointer[data-index="1"]`);
 
-    premierpointeur.setAttribute("onload", "contenulist(),hidebutt(), chargerpopup(),initListe()");
+    premierpointeur.setAttribute("onload", "contenulist(),hidebutt(), chargerpopup()");
 
     var contenueUL = document.querySelector(".listtest").innerHTML;
     var $button = document.querySelectorAll("#iti");
@@ -331,5 +347,146 @@
   }
 
   init();
+
+  /***** *****/
+  
+  let choosedpointers = [];
+
+  let dragStartIndex;
+
+  createList();
+
+  // Insert list items into DOM
+  function createList() {
+     /* choosedpointers
+      .sort((a, b) => a.num_ordre - b.num_ordre)
+      .forEach(e => {
+          const listItem = document.createElement('li');
+
+          listItem.setAttribute('data-index', e.num_ordre);
+    
+          listItem.innerHTML = `
+            <div class="draggable" draggable="true">
+              <p class="person-name">${e.title}</p>
+              <i class="fas fa-grip-lines"></i>
+            </div>
+          `;
+    
+          listItems.push(listItem);
+    
+          draggable_list.appendChild(listItem);
+      })
+  [...prod]
+      .map(a => ({ value: a, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(a => a.value)
+      .forEach((person, index) => {
+        const listItem = document.createElement('li');
+
+        listItem.setAttribute('data-index', index);
+
+        listItem.innerHTML = `
+          <span class="number">${index + 1}</span>
+          <div class="draggable" draggable="true">
+            <p class="person-name">${person}</p>
+            <i class="fas fa-grip-lines"></i>
+          </div>
+        `;
+
+        listItems.push(listItem);
+
+        draggable_list.appendChild(listItem);
+      }); */
+  }
+
+  function addElementPointerList(index, pointer) {
+      const listItem = document.createElement('li');
+
+      listItem.setAttribute('data-index', index);
+
+      listItem.innerHTML = `
+        <span class="number">${index}</span>
+        <div class="draggable" draggable="true">
+          <p class="person-name">${pointer.titre_anim}</p>
+          <i class="fas fa-grip-lines"></i>
+        </div>
+      `;
+
+      choosedpointers.push(pointer)
+
+      $vraieul.appendChild(listItem);
+
+      addEventListenersSpecific(listItem, listItem.getElementsByClassName("draggable")[0])
+  }
+
+
+  function dragStart() {
+    console.log('Event: ', 'dragstart');
+    dragStartIndex = +this.closest('li').getAttribute('data-index');
+  }
+
+  function dragEnter() {
+    console.log('Event: ', 'dragenter');
+    this.classList.add('over');
+  }
+
+  function dragLeave() {
+    console.log('Event: ', 'dragleave');
+    this.classList.remove('over');
+  }
+
+  function dragOver(e) {
+    console.log('Event: ', 'dragover');
+    e.preventDefault();
+  }
+
+  function dragDrop() {
+    console.log('Event: ', 'drop');
+    const dragEndIndex = +this.getAttribute('data-index');
+    swapItems(dragStartIndex, dragEndIndex);
+
+    this.classList.remove('over');
+  }
+
+  // Swap list items that are drag and drop
+  function swapItems(fromIndex, toIndex) {
+    const itemOne = document.querySelector('#draggable-list li[data-index="'+fromIndex+'"]');
+    const itemOneSAVE = itemOne.querySelector("div")
+
+    const itemTwo = document.querySelector('#draggable-list li[data-index="'+toIndex+'"]');
+
+    itemOne.appendChild(itemTwo.querySelector("div"));
+    itemTwo.appendChild(itemOneSAVE);
+
+    choosedpointers[fromIndex].num_ordre = toIndex
+    choosedpointers[toIndex].num_ordre = fromIndex
+  }
+
+
+  function addEventListenersSpecific(li, draggable) {
+    draggable.addEventListener('dragstart', dragStart);
+
+    li.addEventListener('dragover', dragOver);
+    li.addEventListener('drop', dragDrop);
+    li.addEventListener('dragenter', dragEnter);
+    li.addEventListener('dragleave', dragLeave);
+  }
+
+  function addEventListenersAllDraggable() {
+    const draggables = document.querySelectorAll('.draggable');
+    const dragListItems = document.querySelectorAll('.draggable-list li');
+
+    draggables.forEach(draggable => {
+      draggable.addEventListener('dragstart', dragStart);
+    });
+
+    dragListItems.forEach(item => {
+      item.addEventListener('dragover', dragOver);
+      item.addEventListener('drop', dragDrop);
+      item.addEventListener('dragenter', dragEnter);
+      item.addEventListener('dragleave', dragLeave);
+    });
+  }
+
 </script>
 </html>
